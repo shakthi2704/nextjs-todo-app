@@ -42,8 +42,8 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-md border rounded-lg bg-card p-6 shadow">
+        <div className="flex flex-1 items-center justify-center ">
+          <div className="w-full max-w-md border rounded-lg  p-6 shadow bg-primary/20 dark:bg-card">
             {mode === "login" ? (
               <LoginForm onSignupClick={() => setMode("signup")} />
             ) : (
@@ -55,10 +55,10 @@ export default function Home() {
 
       <div className="bg-muted relative hidden lg:block">
         <Image
-          src="/login-2.jpg"
+          src="/login-3.jpg"
           alt="Image"
           width={800} height={500}
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.6]"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8]"
         />
       </div>
     </div>
