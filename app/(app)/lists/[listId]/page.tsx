@@ -7,6 +7,7 @@ import { CreateTodoModal } from "@/components/todos/CreateTodoModal"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import type { Todo } from "@prisma/client"
 
 interface Props {
     params: Promise<{ listId: string }>
@@ -23,7 +24,7 @@ export default async function ListPage({ params }: Props) {
     if (!list) notFound()
 
     const todos = await getTodos(listId)
-    const completedCount = todos.filter(t => t.completed).length
+    const completedCount = todos.filter((t: Todo) => t.completed).length
 
     return (
         <div className="space-y-6 max-w-2xl">
