@@ -36,11 +36,21 @@ const priorityConfig: Record<Priority, { label: string; class: string }> = {
     HIGH: { label: "High", class: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300" },
 }
 
-interface Props {
-    todo: Todo
+interface TodoType {
+    id: string
+    title: string
+    completed: boolean
+    priority: "LOW" | "MEDIUM" | "HIGH"
+    dueDate: Date | null
+    createdAt: Date
+    updatedAt: Date
     listId: string
 }
 
+interface Props {
+    todo: TodoType
+    listId: string
+}
 type Priority = "LOW" | "MEDIUM" | "HIGH"
 
 export function TodoItem({ todo, listId }: Props) {
