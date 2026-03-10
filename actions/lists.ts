@@ -68,3 +68,25 @@ export async function deleteList(listId: string) {
   revalidatePath("/dashboard")
   return { success: true }
 }
+
+export async function updateList(
+  listId: string,
+  prevState: unknown,
+  formData: FormData,
+) {
+  const userId = await getCurrentUserId()
+
+  const parsed = listSchema.safeParse({ name: formData.get("name") })
+  if (!parsed.success) return { error: parsed.error.issues[0].message }
+
+  const list = await prisma.list.findFirst({ where: { id: listId, userId } })
+  if (!list) return { error: "List not found" }
+
+  await prisma.list.update({
+    where: { id: listId },
+    data: { name: parsed.data.name },
+  })
+
+  revalidatePath("/dashboard")
+  return { success: true, error: null }
+}

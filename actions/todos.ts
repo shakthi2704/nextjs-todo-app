@@ -94,3 +94,35 @@ export async function deleteTodo(todoId: string, listId: string) {
   revalidatePath(`/lists/${listId}`)
   return { success: true, error: null }
 }
+
+export async function updateTodo(
+  todoId: string,
+  listId: string,
+  prevState: unknown,
+  formData: FormData,
+) {
+  const userId = await getCurrentUserId()
+  await verifyListOwnership(listId, userId)
+
+  const parsed = todoSchema.safeParse({
+    title: formData.get("title"),
+    priority: formData.get("priority") || "MEDIUM",
+    dueDate: formData.get("dueDate"),
+  })
+
+  if (!parsed.success) return { error: parsed.error.issues[0].message }
+
+  const { title, priority, dueDate } = parsed.data
+
+  await prisma.todo.update({
+    where: { id: todoId },
+    data: {
+      title,
+      priority,
+      dueDate: dueDate ? new Date(dueDate) : null,
+    },
+  })
+
+  revalidatePath(`/lists/${listId}`)
+  return { success: true, error: null }
+}
