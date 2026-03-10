@@ -7,7 +7,8 @@ import { CreateTodoModal } from "@/components/todos/CreateTodoModal"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import type { Todo } from "@prisma/client"
+
+type TodoItem = Awaited<ReturnType<typeof getTodos>>[number]
 
 interface Props {
     params: Promise<{ listId: string }>
@@ -24,11 +25,10 @@ export default async function ListPage({ params }: Props) {
     if (!list) notFound()
 
     const todos = await getTodos(listId)
-    const completedCount = todos.filter((t: Todo) => t.completed).length
+    const completedCount = todos.filter((t: TodoItem) => t.completed).length
 
     return (
         <div className="space-y-6 max-w-2xl">
-            {/* Back button */}
             <Button variant="ghost" size="sm" asChild>
                 <Link href="/dashboard">
                     <ArrowLeft className="w-4 h-4 mr-1" />
@@ -36,7 +36,6 @@ export default async function ListPage({ params }: Props) {
                 </Link>
             </Button>
 
-            {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold">{list.name}</h1>
@@ -47,7 +46,6 @@ export default async function ListPage({ params }: Props) {
                 <CreateTodoModal listId={listId} />
             </div>
 
-            {/* Todos */}
             {todos.length === 0 ? (
                 <div className="text-center py-16 text-muted-foreground border rounded-lg">
                     <p className="text-lg font-medium">No todos yet</p>
@@ -55,7 +53,7 @@ export default async function ListPage({ params }: Props) {
                 </div>
             ) : (
                 <div className="space-y-2">
-                    {todos.map((todo) => (
+                    {todos.map((todo: TodoItem) => (
                         <TodoItem key={todo.id} todo={todo} listId={listId} />
                     ))}
                 </div>
