@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import { Trash2, Calendar, Pencil, Check, X } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import type { Todo } from "@prisma/client"
+
 import {
     AlertDialog,
     AlertDialogAction,
