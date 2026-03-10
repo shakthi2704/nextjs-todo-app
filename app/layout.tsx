@@ -44,7 +44,7 @@ export default function RootLayout({
           <SessionProvider>
             {children}
           </SessionProvider>
-          <Toaster richColors position="top-center"  />
+          <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
     </html>
