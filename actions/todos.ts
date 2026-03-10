@@ -3,8 +3,15 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { revalidatePath } from "next/cache"
-import { Priority } from "@prisma/client"
 import { z } from "zod"
+
+const Priority = {
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
+} as const
+
+type Priority = keyof typeof Priority
 
 async function getCurrentUserId(): Promise<string> {
   const session = await auth()
@@ -20,7 +27,7 @@ async function verifyListOwnership(listId: string, userId: string) {
 
 const todoSchema = z.object({
   title: z.string().min(1, "Title is required").max(200),
-  priority: z.nativeEnum(Priority).default("MEDIUM"),
+  priority: z.enum(["LOW", "MEDIUM", "HIGH"]).default("MEDIUM"),
   dueDate: z.string().optional().nullable(),
 })
 

@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import { Trash2, Calendar, Pencil, Check, X } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import type { Todo, Priority } from "@prisma/client"
+import type { Todo } from "@prisma/client"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -40,6 +40,8 @@ interface Props {
     todo: Todo
     listId: string
 }
+
+type Priority = "LOW" | "MEDIUM" | "HIGH"
 
 export function TodoItem({ todo, listId }: Props) {
     const [isEditing, setIsEditing] = useState(false)
