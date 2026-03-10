@@ -18,6 +18,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { EditListModal } from "./EditListModal"
 
 interface Props {
     list: {
@@ -42,8 +43,8 @@ export function ListCard({ list }: Props) {
 
     return (
         <Card className="hover:shadow-md transition-all group relative">
+            <EditListModal list={list} />
 
-            {/* Delete button */}
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button

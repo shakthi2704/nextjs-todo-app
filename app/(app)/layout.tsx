@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import AppSidebar from "@/components/dashboard/AppSidebar"
-import Header from "./dashboard/Header"
+import Header from "@/components/dashboard/Header"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 
