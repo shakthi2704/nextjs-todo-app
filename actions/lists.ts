@@ -49,9 +49,15 @@ export async function getStats() {
     include: { todos: { select: { completed: true } } },
   })
 
-  const total = lists.reduce((acc: number, l) => acc + l.todos.length, 0)
+  type ListWithTodos = { todos: { completed: boolean }[] }
+
+  const total = lists.reduce(
+    (acc: number, l: ListWithTodos) => acc + l.todos.length,
+    0,
+  )
   const completed = lists.reduce(
-    (acc: number, l) => acc + l.todos.filter((t) => t.completed).length,
+    (acc: number, l: ListWithTodos) =>
+      acc + l.todos.filter((t) => t.completed).length,
     0,
   )
   const pending = total - completed
